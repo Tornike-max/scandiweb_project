@@ -40,11 +40,9 @@ class ProductController
         echo json_encode($response);
     }
 
-    public function getProduct(Request $requesst, $idIfExists)
+    public function getProduct(Request $request, $idIfExists)
     {
         $productModel = Application::$app->productsModel;
-        echo $idIfExists;
-
         try {
             $product = $productModel->getProductById($idIfExists);
 
@@ -62,7 +60,31 @@ class ProductController
 
     public function deleteProduct()
     {
-        // Implement deleteProduct functionality here
+        $productIds = Application::$app->request->getData();
+        try {
+            if (is_array($productIds)) {
+                foreach ($productIds as $value) {
+                    if (!isset($value)) {
+                        throw new Exception('No Data Provided!');
+                        return;
+                    }
+                }
+            }
+
+            if (!isset($productIds)) {
+                throw new Exception('No Data Provided!');
+                return;
+            }
+
+            $productModel = Application::$app->productsModel;
+            $response = $productModel->deleteProductById($productIds);
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
+        } catch (Exception $e) {
+            http_response_code(404);
+            echo json_encode(['error' => $e->getMessage()]);
+        }
     }
 
     public function deleteAllProducts()

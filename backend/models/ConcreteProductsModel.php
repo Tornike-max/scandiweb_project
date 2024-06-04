@@ -46,13 +46,31 @@ class ConcreteProductsModel extends ProductsModel
         return $products;
     }
 
-    public function getProductById($id)
+    public function getProductById($idIfExists)
     {
         $query = "select * from products where id = :id";
         $stmt = $this->conn->prepare($query);
-        $stmt->bindParam(':id', $id);
+        $stmt->bindParam(':id', $idIfExists);
         $stmt->execute();
         $product = $stmt->fetch(\PDO::FETCH_ASSOC);
         return $product;
+    }
+
+    public function deleteProductById($productIds)
+    {
+        if (empty($productIds)) {
+            return ['message' => 'No Product IDs provided'];
+        }
+
+        $placeholders = implode(',', array_fill(0, count($productIds), '?'));
+
+        $query = "DELETE FROM products WHERE id IN ($placeholders)";
+        $stmt = $this->conn->prepare($query);
+
+        if ($stmt->execute($productIds)) {
+            return ['message' => 'Product Deleted Successfully'];
+        } else {
+            return ['message' => 'Product Deletion Failed'];
+        }
     }
 }

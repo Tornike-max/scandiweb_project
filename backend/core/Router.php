@@ -35,21 +35,19 @@ class Router
     {
         $path = $this->request->getPath();
         $method = $this->request->getMethod();
-        $idIfExists = $this->request->getPathInfoId() ?? null;
+        $idIfExists = null;
 
-        $callback = $this->routes[$method][$path] ?? false;
-
-        if ($callback === false) {
-            http_response_code(404);
-        }
-
-        if (is_array($callback)) {
-            $class = new $callback[0]();
-
-            if (method_exists($class, $callback[1])) {
+        foreach ($this->routes[$method] as $route => $callback) {
+            $routePattern = str_replace('/', '\/', $route);
+            $routePattern = preg_replace('/{([^}]*)}/', '(?P<\1>[^\/]+)', $routePattern);
+            if (preg_match('/^' . $routePattern . '$/', $path, $matches)) {
+                $idIfExists = $matches['id'] ?? null;
+                $class = new $callback[0]();
                 $request = $this->request;
                 return call_user_func([$class, $callback[1]], $request, $idIfExists);
             }
         }
+
+        http_response_code(404);
     }
 }

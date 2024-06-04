@@ -15,7 +15,8 @@ require_once __DIR__ . '/vendor/autoload.php';
 $app = new Application();
 
 $app->router->get('/products', [ProductController::class, 'products']);
-$app->router->get('/products/{:id}', [ProductController::class, 'getProduct']);
+$app->router->get('/products/{id}', [ProductController::class, 'getProduct']);
+$app->router->post('/productDelete', [ProductController::class, 'deleteProduct']);
 $app->router->post('/addproduct', [ProductController::class, 'addProduct']);
 
 $app->router->resolve();
