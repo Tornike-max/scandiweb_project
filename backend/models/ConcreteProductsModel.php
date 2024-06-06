@@ -4,6 +4,7 @@ namespace app\models;
 
 use PDOException;
 use Exception;
+use PDO;
 
 class ConcreteProductsModel extends ProductsModel
 {
@@ -13,24 +14,37 @@ class ConcreteProductsModel extends ProductsModel
             $columns = implode(',', array_keys($data));
             $placeholders = implode(', ', array_map(fn ($key) => ":$key", array_keys($data)));
 
-            $query = "insert into products ($columns) values ($placeholders)";
+            $query = 'select * from products where sku = :sku';
+            $stmt = $this->conn->prepare($query);
+            $stmt->bindValue(':sku', $data['sku']);
+            $stmt->execute();
+            $skuExists = $stmt->fetch(\PDO::FETCH_ASSOC);
+
+            if ($skuExists) {
+                http_response_code(409);
+                echo json_encode(['message' => "Error: The data you're trying to insert already exists"]);
+                exit;
+            }
+
+            $query = "INSERT INTO products ($columns) VALUES ($placeholders)";
             $stmt = $this->executeStatement($query, $data);
 
-            header('Content-Type: application/json');
             $response = [];
             if ($stmt) {
                 $response['message'] = 'Data inserted successfully!';
-                return $response;
             } else {
                 $response['message'] = 'No Data Inserted!';
-                return $response;
             }
+
+            header('Content-Type: application/json');
+            echo json_encode($response);
         } catch (PDOException $e) {
             echo 'Database error: ' . $e->getMessage();
         } catch (Exception $e) {
             echo 'General error: ' . $e->getMessage();
         }
     }
+
 
     public function getProducts()
     {
@@ -64,7 +78,7 @@ class ConcreteProductsModel extends ProductsModel
 
         $placeholders = implode(',', array_fill(0, count($productIds), '?'));
 
-        $query = "DELETE FROM products WHERE id IN ($placeholders)";
+        $query = "delete from products where id in ($placeholders)";
         $stmt = $this->conn->prepare($query);
 
         if ($stmt->execute($productIds)) {
