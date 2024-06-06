@@ -24,7 +24,7 @@ const Product = ({
           onChange={handleCheckboxChange}
         />
       </form>
-      <div className="w-full flex justify-center items-center flex-col px-6 font-medium">
+      <div className="w-full flex justify-center items-center flex-col px-4 font-medium">
         <p>{product.name}</p>
         <p>{product.sku}</p>
         <p>{product.price}</p>

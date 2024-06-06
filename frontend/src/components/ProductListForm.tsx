@@ -140,7 +140,9 @@ const ProductListForm = () => {
               className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
               type="number"
               placeholder="#size"
-              {...register("size")}
+              {...register("size", {
+                required: "This Field Is Required",
+              })}
             />
             {errors.size && (
               <span className="text-red-500 text-sm mt-1">
@@ -228,7 +230,9 @@ const ProductListForm = () => {
               className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
               type="number"
               placeholder="#weight"
-              {...register("weight")}
+              {...register("weight", {
+                required: "This Field Is Required",
+              })}
             />
             {errors.weight && (
               <span className="text-red-500 text-sm mt-1">
@@ -244,7 +248,7 @@ const ProductListForm = () => {
           type="submit"
           className="py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150"
         >
-          {isPending ? "Loading..." : "Add"}
+          {isPending ? "Loading..." : "Save"}
         </button>
       </div>
     </form>
