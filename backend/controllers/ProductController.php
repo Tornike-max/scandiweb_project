@@ -24,11 +24,13 @@ class ProductController
 
     public function addProduct()
     {
-        $data = Application::$app->request->getData();
+        $request = Application::$app->request;
+        $data = $request->getData();
 
         foreach ($data as $value) {
             if (!isset($value)) {
-                throw new Exception('No Data Provided!');
+                http_response_code(400);
+                echo json_encode(['error' => 'Please submit required data']);
                 return;
             }
         }
