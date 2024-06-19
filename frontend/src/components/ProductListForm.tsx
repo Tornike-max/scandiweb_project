@@ -48,7 +48,7 @@ const ProductListForm = () => {
 
   return (
     <form
-      id="product_form"
+      id="#product_form"
       className="max-w-[600px] w-full flex flex-col gap-4 p-4 bg-white rounded-xl shadow-2xl mx-auto"
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -58,7 +58,7 @@ const ProductListForm = () => {
         </label>
         <div className="sm:w-3/4 w-full flex flex-col">
           <input
-            id="sku"
+            id="#sku"
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
             type="text"
             placeholder="SKU"
@@ -80,7 +80,7 @@ const ProductListForm = () => {
           <input
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
             type="text"
-            id="name"
+            id="#name"
             placeholder="Name"
             {...register("name")}
           />
@@ -100,7 +100,7 @@ const ProductListForm = () => {
           <input
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
             type="number"
-            id="price"
+            id="#price"
             placeholder="Price"
             {...register("price")}
           />
@@ -118,7 +118,7 @@ const ProductListForm = () => {
         </label>
         <div className="sm:w-3/4 w-full flex flex-col">
           <select
-            id="productType"
+            id="#productType"
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
             {...register("type")}
             onChange={(e) => changeType(e.target.value)}
@@ -145,7 +145,7 @@ const ProductListForm = () => {
             <input
               className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
               type="text"
-              id="size"
+              id="#size"
               placeholder={productTypeDescriptions.dvd}
               {...register("size")}
             />
@@ -165,7 +165,7 @@ const ProductListForm = () => {
           </label>
           <div className="sm:w-3/4 w-full flex flex-col">
             <input
-              id="weight"
+              id="#weight"
               className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
               type="text"
               placeholder={productTypeDescriptions.book}
@@ -190,7 +190,7 @@ const ProductListForm = () => {
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
                 type="text"
-                id="height"
+                id="#height"
                 {...register("height")}
                 placeholder="#height"
               />
@@ -209,7 +209,7 @@ const ProductListForm = () => {
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
                 type="text"
-                id="width"
+                id="#width"
                 {...register("width")}
                 placeholder="#width"
               />
@@ -228,7 +228,7 @@ const ProductListForm = () => {
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
                 type="text"
-                id="length"
+                id="#length"
                 placeholder="#length"
                 {...register("length")}
               />
