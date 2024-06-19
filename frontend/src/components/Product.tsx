@@ -18,6 +18,7 @@ const Product = ({
       <form className="w-full flex justify-start items-center">
         <input
           value={product.id}
+          form="delete-form"
           type="checkbox"
           className="delete-checkbox"
           checked={isChecked}

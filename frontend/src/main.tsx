@@ -6,7 +6,6 @@ import "./index.css";
 import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
 import { ReactQueryDevtools } from "@tanstack/react-query-devtools";
 import { CheckInputsProvider } from "./context/CheckInputContext.tsx";
-import { SaveProductProvider } from "./context/SaveProductContext.tsx";
 
 const queryClient = new QueryClient({
   defaultOptions: {
@@ -20,10 +19,8 @@ ReactDOM.createRoot(document.getElementById("root")!).render(
   <React.StrictMode>
     <CheckInputsProvider>
       <QueryClientProvider client={queryClient}>
-        <SaveProductProvider>
-          <ReactQueryDevtools initialIsOpen={false} />
-          <App />
-        </SaveProductProvider>
+        <ReactQueryDevtools initialIsOpen={false} />
+        <App />
       </QueryClientProvider>
     </CheckInputsProvider>
   </React.StrictMode>

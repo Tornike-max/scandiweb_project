@@ -1,9 +1,9 @@
-import ProductListForm from "../components/ProductListForm";
+import AddProduct from "../components/AddProduct";
 
 const AddProductPage = () => {
   return (
-    <div className="w-full flex justify-center items-center pt-32 pb-10">
-      <ProductListForm />
+    <div className="w-full flex justify-center items-center flex-col pt-32 pb-10">
+      <AddProduct />
     </div>
   );
 };
