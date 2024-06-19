@@ -18,7 +18,9 @@ const ProductListForm = () => {
   } = useForm<ProductType>({
     resolver: zodResolver(schema),
   });
+
   const getType = searchParams.get("type") || "none";
+
   const onSubmit: SubmitHandler<ProductType> = (data) => {
     if (!data) {
       return;
@@ -44,15 +46,15 @@ const ProductListForm = () => {
     >
       <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-4">
         <label className="text-slate-900 font-semibold text-lg sm:w-1/4 w-full">
-          Sku
+          SKU
         </label>
         <div className="sm:w-3/4 w-full flex flex-col">
           <input
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
             type="text"
-            placeholder="Sku"
+            placeholder="SKU"
             {...register("sku", {
-              required: "This Field Is Required",
+              required: "SKU is required",
             })}
           />
           {errors.sku && (
@@ -73,7 +75,7 @@ const ProductListForm = () => {
             type="text"
             placeholder="Name"
             {...register("name", {
-              required: "This Field Is Required",
+              required: "Name is required",
             })}
           />
           {errors.name && (
@@ -86,7 +88,7 @@ const ProductListForm = () => {
 
       <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-4">
         <label className="text-slate-900 font-semibold text-lg sm:w-1/4 w-full">
-          Price
+          Price ($)
         </label>
         <div className="sm:w-3/4 w-full flex flex-col">
           <input
@@ -94,7 +96,7 @@ const ProductListForm = () => {
             type="number"
             placeholder="Price"
             {...register("price", {
-              required: "This Field Is Required",
+              required: "Price is required",
             })}
           />
           {errors.price && (
@@ -113,11 +115,11 @@ const ProductListForm = () => {
           <select
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
             {...register("type", {
-              required: "This Field Is Required",
+              required: "Type is required",
             })}
             onChange={(e) => changeType(e.target.value)}
           >
-            <option value="none">Type Switcher</option>
+            <option value="">Select Type</option>
             <option value="dvd">DVD</option>
             <option value="book">Book</option>
             <option value="furniture">Furniture</option>
@@ -139,9 +141,8 @@ const ProductListForm = () => {
             <input
               className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
               type="number"
-              placeholder="#size"
               {...register("size", {
-                required: "This Field Is Required",
+                required: "Size is required for DVDs",
               })}
             />
             {errors.size && (
@@ -163,9 +164,8 @@ const ProductListForm = () => {
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
                 type="number"
-                placeholder="#height"
                 {...register("height", {
-                  required: "This Field Is Required",
+                  required: "Height is required for Furniture",
                 })}
               />
               {errors.height && (
@@ -184,9 +184,8 @@ const ProductListForm = () => {
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
                 type="number"
-                placeholder="#width"
                 {...register("width", {
-                  required: "This Field Is Required",
+                  required: "Width is required for Furniture",
                 })}
               />
               {errors.width && (
@@ -205,9 +204,8 @@ const ProductListForm = () => {
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
                 type="number"
-                placeholder="#length"
                 {...register("length", {
-                  required: "This Field Is Required",
+                  required: "Length is required for Furniture",
                 })}
               />
               {errors.length && (
@@ -229,9 +227,8 @@ const ProductListForm = () => {
             <input
               className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
               type="number"
-              placeholder="#weight"
               {...register("weight", {
-                required: "This Field Is Required",
+                required: "Weight is required for Books",
               })}
             />
             {errors.weight && (
@@ -247,8 +244,9 @@ const ProductListForm = () => {
         <button
           type="submit"
           className="py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150"
+          disabled={isPending}
         >
-          {isPending ? "Loading..." : "Save"}
+          {isPending ? "Saving..." : "Save"}
         </button>
       </div>
     </form>

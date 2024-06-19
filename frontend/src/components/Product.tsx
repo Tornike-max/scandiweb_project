@@ -32,9 +32,9 @@ const Product = ({
           {product.size !== null
             ? `Size: ${product.size} MB`
             : product.weight !== null
-            ? `Weight: ${product.weight}KG`
+            ? `Weight: ${product.weight} KG`
             : product.height !== null
-            ? `Dimension: ${product.height}x${product.width}x${product.length}`
+            ? `Dimensions: ${product.height}x${product.width}x${product.length} CM`
             : ""}
         </p>
       </div>
