@@ -3,6 +3,10 @@
 
 namespace app\core;
 
+use app\core\validation\BookValidator;
+use app\core\validation\DvdValidator;
+use app\core\validation\FurnitureValidator;
+
 class Request
 {
     public string $requestMethod;
@@ -60,44 +64,45 @@ class Request
         $data = json_decode($json, true);
 
         if (empty($data)) {
-            return null;
-        }
-
-        foreach ($data as $item) {
-            if (!isset($item)) {
-                return null;
-            }
+            throw new \Exception("No data provided");
         }
 
         if (json_last_error() !== JSON_ERROR_NONE) {
             throw new \Exception("Error decoding JSON: " . json_last_error_msg());
         }
 
-        return $data;
-    }
+        $validator = null;
 
-    public function getHash()
-    {
-        $pwd = $this->getData()['password'];
-        $this->hashedPassword = password_hash($pwd, PASSWORD_DEFAULT);
-
-        if ($this->hashedPassword === false) {
-            throw new \Exception("Error generating password hash");
+        if ($data['type'] === 'dvd' || $data['type'] === 'book' || $data['type'] === 'furniture') {
+            switch ($data['type']) {
+                case 'dvd':
+                    $validator = new DvdValidator($data);
+                    break;
+                case 'book':
+                    $validator = new BookValidator($data);
+                    break;
+                case 'furniture':
+                    $validator = new FurnitureValidator($data);
+                    break;
+                default:
+                    throw new \Exception("Invalid product type");
+            }
+            $validator->validate();
         }
 
-        return $this->hashedPassword;
+        return $data;
     }
 
     public function checkInvalidData()
     {
         $data = $this->getData();
 
-        foreach ($data as $value) {
+        foreach ($data as $key => $value) {
             if (!isset($value)) {
-                throw new \Exception('No Data Provided!');
-                return;
+                throw new \Exception("Please provide all required data for '{$key}'");
             }
-        };
+        }
+
         return $data;
     }
 

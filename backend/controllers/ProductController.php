@@ -25,15 +25,7 @@ class ProductController
     public function addProduct()
     {
         $request = Application::$app->request;
-        $data = $request->getData();
-
-        foreach ($data as $value) {
-            if (!isset($value)) {
-                http_response_code(400);
-                echo json_encode(['error' => 'Please submit required data']);
-                return;
-            }
-        }
+        $data = $request->checkInvalidData();
 
         $productModel = Application::$app->productsModel;
         $response = $productModel->save($data);
