@@ -39,7 +39,6 @@ const ProductListForm = () => {
     setSearchParams(searchParams);
   };
 
-  // Descriptions for each product type
   const productTypeDescriptions: Record<ProductType["type"], string> = {
     dvd: "Please provide size (MB)",
     book: "Please provide weight (KG)",
