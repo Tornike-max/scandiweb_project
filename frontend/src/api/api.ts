@@ -7,7 +7,8 @@ export const addProductApi = async (data: ProductType) => {
     if (response.status !== 200) {
       throw new Error(`An error occurred: ${response.status}`);
     }
-    return response.data;
+
+    return response;
   } catch (error) {
     if (axios.isAxiosError(error)) {
       throw new Error(

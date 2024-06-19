@@ -1,24 +1,54 @@
 import { z } from "zod";
 
 const baseSchema = z.object({
-  name: z.string().min(1, { message: "This field is required" }),
-  price: z.string().min(1, { message: "This field is required" }),
-  sku: z.string().min(1, { message: "This field is required" }),
-  type: z.string().min(1, { message: "This field is required" }),
+  name: z.string().min(1, { message: "Please, submit required data" }),
+  price: z.string().min(1, { message: "Please, submit required data" }),
+  sku: z.string().min(1, { message: "Please, submit required data" }),
+  type: z.string().min(1, { message: "Please, submit required data" }),
 });
 
 const dvdSchema = baseSchema.extend({
-  size: z.string().min(1, { message: "This field is required" }),
+  size: z
+    .string()
+    .min(1, { message: "Please, submit required data" })
+    .refine((value) => /^\d+$/.test(value), {
+      message: "Please, provide the data of indicated type",
+      path: ["size"],
+    }),
 });
 
 const bookSchema = baseSchema.extend({
-  weight: z.string().min(1, { message: "This field is required" }),
+  weight: z
+    .string()
+    .min(1, { message: "Please, submit required data" })
+    .refine((value) => /^\d+$/.test(value), {
+      message: "Please, provide the data of indicated type",
+      path: ["weight"],
+    }),
 });
 
 const furnitureSchema = baseSchema.extend({
-  height: z.string().min(1, { message: "This field is required" }),
-  width: z.string().min(1, { message: "This field is required" }),
-  length: z.string().min(1, { message: "This field is required" }),
+  height: z
+    .string()
+    .min(1, { message: "Please, submit required data" })
+    .refine((value) => /^\d+(\.\d+)?$/.test(value), {
+      message: "Please, provide the data of indicated type",
+      path: ["height"],
+    }),
+  width: z
+    .string()
+    .min(1, { message: "Please, submit required data" })
+    .refine((value) => /^\d+(\.\d+)?$/.test(value), {
+      message: "Please, provide the data of indicated type",
+      path: ["width"],
+    }),
+  length: z
+    .string()
+    .min(1, { message: "Please, submit required data" })
+    .refine((value) => /^\d+(\.\d+)?$/.test(value), {
+      message: "Please, provide the data of indicated type",
+      path: ["length"],
+    }),
 });
 
 export const schema = z.union([dvdSchema, bookSchema, furnitureSchema]).refine(
@@ -35,7 +65,7 @@ export const schema = z.union([dvdSchema, bookSchema, furnitureSchema]).refine(
     }
   },
   {
-    message: "Invalid product type or missing required fields for the type",
+    message: "Please, provide the data of indicated type",
     path: ["type"],
   }
 );

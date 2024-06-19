@@ -60,10 +60,7 @@ const ProductList = () => {
       )}
 
       <div className="w-full flex justify-center items-center py-4">
-        <Link
-          to="/productadd"
-          className="py-2 px-4 bg-green-600 text-white font-semibold rounded-lg hover:bg-green-700 transition duration-150"
-        >
+        <Link to="/productadd" className="N">
           ADD
         </Link>
       </div>

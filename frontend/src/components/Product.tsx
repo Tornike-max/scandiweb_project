@@ -19,7 +19,7 @@ const Product = ({
         <input
           value={product.id}
           type="checkbox"
-          className="rounded-md cursor-pointer"
+          className="delete-checkbox"
           checked={isChecked}
           onChange={handleCheckboxChange}
         />

@@ -39,8 +39,16 @@ const ProductListForm = () => {
     setSearchParams(searchParams);
   };
 
+  // Descriptions for each product type
+  const productTypeDescriptions: Record<ProductType["type"], string> = {
+    dvd: "Please provide size (MB)",
+    book: "Please provide weight (KG)",
+    furniture: "Please provide dimensions (Height, Width, Length in CM)",
+  };
+
   return (
     <form
+      id="product_form"
       className="max-w-[600px] w-full flex flex-col gap-4 p-4 bg-white rounded-xl shadow-2xl mx-auto"
       onSubmit={handleSubmit(onSubmit)}
     >
@@ -50,12 +58,11 @@ const ProductListForm = () => {
         </label>
         <div className="sm:w-3/4 w-full flex flex-col">
           <input
+            id="sku"
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
             type="text"
             placeholder="SKU"
-            {...register("sku", {
-              required: "SKU is required",
-            })}
+            {...register("sku")}
           />
           {errors.sku && (
             <span className="text-red-500 text-sm mt-1">
@@ -73,10 +80,9 @@ const ProductListForm = () => {
           <input
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
             type="text"
+            id="name"
             placeholder="Name"
-            {...register("name", {
-              required: "Name is required",
-            })}
+            {...register("name")}
           />
           {errors.name && (
             <span className="text-red-500 text-sm mt-1">
@@ -94,10 +100,9 @@ const ProductListForm = () => {
           <input
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
             type="number"
+            id="price"
             placeholder="Price"
-            {...register("price", {
-              required: "Price is required",
-            })}
+            {...register("price")}
           />
           {errors.price && (
             <span className="text-red-500 text-sm mt-1">
@@ -113,10 +118,9 @@ const ProductListForm = () => {
         </label>
         <div className="sm:w-3/4 w-full flex flex-col">
           <select
+            id="productType"
             className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
-            {...register("type", {
-              required: "Type is required",
-            })}
+            {...register("type")}
             onChange={(e) => changeType(e.target.value)}
           >
             <option value="">Select Type</option>
@@ -140,14 +144,36 @@ const ProductListForm = () => {
           <div className="sm:w-3/4 w-full flex flex-col">
             <input
               className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
-              type="number"
-              {...register("size", {
-                required: "Size is required for DVDs",
-              })}
+              type="text"
+              id="size"
+              placeholder={productTypeDescriptions.dvd}
+              {...register("size")}
             />
             {errors.size && (
               <span className="text-red-500 text-sm mt-1">
                 {errors.size.message}
+              </span>
+            )}
+          </div>
+        </div>
+      )}
+
+      {getType === "book" && (
+        <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-4">
+          <label className="text-slate-900 font-semibold text-lg sm:w-1/4 w-full">
+            Weight (KG)
+          </label>
+          <div className="sm:w-3/4 w-full flex flex-col">
+            <input
+              id="weight"
+              className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
+              type="text"
+              placeholder={productTypeDescriptions.book}
+              {...register("weight")}
+            />
+            {errors.weight && (
+              <span className="text-red-500 text-sm mt-1">
+                {errors.weight.message}
               </span>
             )}
           </div>
@@ -160,13 +186,13 @@ const ProductListForm = () => {
             <label className="text-slate-900 font-semibold text-lg sm:w-1/4 w-full">
               Height (CM)
             </label>
-            <div className="sm:w-3/4 w-full flex flex-col">
+            <div className="sm:w-3/4 w-full flex flex-col  gap-4">
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
-                type="number"
-                {...register("height", {
-                  required: "Height is required for Furniture",
-                })}
+                type="text"
+                id="height"
+                {...register("height")}
+                placeholder="#height"
               />
               {errors.height && (
                 <span className="text-red-500 text-sm mt-1">
@@ -175,7 +201,6 @@ const ProductListForm = () => {
               )}
             </div>
           </div>
-
           <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-4">
             <label className="text-slate-900 font-semibold text-lg sm:w-1/4 w-full">
               Width (CM)
@@ -183,10 +208,10 @@ const ProductListForm = () => {
             <div className="sm:w-3/4 w-full flex flex-col">
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
-                type="number"
-                {...register("width", {
-                  required: "Width is required for Furniture",
-                })}
+                type="text"
+                id="width"
+                {...register("width")}
+                placeholder="#width"
               />
               {errors.width && (
                 <span className="text-red-500 text-sm mt-1">
@@ -195,7 +220,6 @@ const ProductListForm = () => {
               )}
             </div>
           </div>
-
           <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-4">
             <label className="text-slate-900 font-semibold text-lg sm:w-1/4 w-full">
               Length (CM)
@@ -203,10 +227,10 @@ const ProductListForm = () => {
             <div className="sm:w-3/4 w-full flex flex-col">
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
-                type="number"
-                {...register("length", {
-                  required: "Length is required for Furniture",
-                })}
+                type="text"
+                id="length"
+                placeholder="#length"
+                {...register("length")}
               />
               {errors.length && (
                 <span className="text-red-500 text-sm mt-1">
@@ -218,32 +242,12 @@ const ProductListForm = () => {
         </>
       )}
 
-      {getType === "book" && (
-        <div className="w-full flex flex-col sm:flex-row justify-between items-center mb-4">
-          <label className="text-slate-900 font-semibold text-lg sm:w-1/4 w-full">
-            Weight (KG)
-          </label>
-          <div className="sm:w-3/4 w-full flex flex-col">
-            <input
-              className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
-              type="number"
-              {...register("weight", {
-                required: "Weight is required for Books",
-              })}
-            />
-            {errors.weight && (
-              <span className="text-red-500 text-sm mt-1">
-                {errors.weight.message}
-              </span>
-            )}
-          </div>
-        </div>
-      )}
+      <div>{productTypeDescriptions.getType}</div>
 
-      <div className="w-full flex justify-end items-center">
+      <div className="w-full flex justify-center">
         <button
           type="submit"
-          className="py-2 px-4 bg-blue-600 text-white font-semibold rounded-lg hover:bg-blue-700 transition duration-150"
+          className="py-2 px-6 bg-slate-900 text-white rounded-lg shadow-md hover:bg-slate-800 transition duration-150 ease-in-out"
           disabled={isPending}
         >
           {isPending ? "Saving..." : "Save"}
