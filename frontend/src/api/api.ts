@@ -1,12 +1,15 @@
 import axios from "axios";
 import { ProductType } from "../types/types";
 
+const baseUrl = "https://glassed-son.000webhostapp.com/backend/";
+
 export const addProductApi = async (data: ProductType) => {
   try {
-    const response = await axios.post("http://localhost:8080/addproduct", data);
-    if (response.status !== 200) {
-      throw new Error(`An error occurred: ${response.status}`);
-    }
+    const response = await axios.post(`${baseUrl}addproduct`, data, {
+      headers: {
+        "Content-Type": "application/json",
+      },
+    });
 
     return response;
   } catch (error) {
@@ -22,7 +25,7 @@ export const addProductApi = async (data: ProductType) => {
 
 export const getProductsApi = async () => {
   try {
-    const response = await axios.get("http://localhost:8080/products");
+    const response = await axios.get(`${baseUrl}products`);
     if (response.status !== 200) {
       throw new Error(`An error occurred: ${response.status}`);
     }
@@ -40,10 +43,7 @@ export const getProductsApi = async () => {
 
 export const deleteProductApi = async (productIds: string[]) => {
   try {
-    const response = await axios.post(
-      "http://localhost:8080/productDelete",
-      productIds
-    );
+    const response = await axios.post(`${baseUrl}productDelete`, productIds);
     if (response.status !== 200) {
       throw new Error(`An error occurred: ${response.status}`);
     }

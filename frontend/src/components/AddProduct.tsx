@@ -175,7 +175,7 @@ const AddProduct = () => {
             <div className="sm:w-3/4 w-full flex flex-col">
               <input
                 className="w-full p-2 rounded-lg border-2 border-slate-300 focus:border-slate-900 focus:outline-none transition duration-150 ease-in-out"
-                type="text"
+                type="number"
                 id="size"
                 min="1"
                 step="1"

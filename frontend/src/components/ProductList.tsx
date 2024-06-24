@@ -27,7 +27,7 @@ const ProductList = () => {
           </h1>
           <div className="flex items-center gap-2">
             <button
-              onClick={() => navigate("/productadd")}
+              onClick={() => navigate("/add-product")}
               className="py-1 px-3 border-[2px] border-b-4 border-r-4 border-slate-900 hover:border-r-[5px] hover:border-b-[5px] duration-100 transition-all"
             >
               ADD

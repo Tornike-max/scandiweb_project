@@ -9,7 +9,7 @@ const App = () => {
       <Routes>
         <Route path="/" element={<MainLayout />}>
           <Route index element={<ProductListPage />} />
-          <Route path="/productadd" element={<AddProductPage />} />
+          <Route path="/add-product" element={<AddProductPage />} />
         </Route>
       </Routes>
     </BrowserRouter>
